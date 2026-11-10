@@ -1,0 +1,125 @@
+{
+  "info": {
+    "name": "TP 09 - Reservas de salas",
+    "description": "Pruebas del CRUD de reservas. Crear una reserva con POST para guardar automáticamente su ID en la variable reservaId.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "reservaId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "1 - Listar reservas",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/reservas"
+      }
+    },
+    {
+      "name": "2 - Crear reserva de prueba",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('La creación responde 201', function () { pm.response.to.have.status(201); });",
+              "if (pm.response.code === 201) { const body = pm.response.json(); pm.collectionVariables.set('reservaId', body.id); pm.test('La respuesta incluye ID y estado pendiente', function () { pm.expect(body.id).to.be.a('string'); pm.expect(body.estado).to.eql('pendiente'); }); }"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"estudiante\": \"Ana Ejemplo\",\n  \"email\": \"ana@example.com\",\n  \"sala\": \"Sala Norte\",\n  \"fecha\": \"2026-10-28\",\n  \"turno\": \"Mañana\",\n  \"personas\": 2\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/reservas"
+      }
+    },
+    {
+      "name": "3 - Consultar por ID",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/reservas/{{reservaId}}"
+      }
+    },
+    {
+      "name": "4 - PUT reemplazo completo",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"estudiante\": \"Ana Ejemplo\",\n  \"email\": \"ana@example.com\",\n  \"sala\": \"Sala Norte\",\n  \"fecha\": \"2026-10-28\",\n  \"turno\": \"Mañana\",\n  \"personas\": 2,\n  \"estado\": \"confirmada\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/reservas/{{reservaId}}"
+      }
+    },
+    {
+      "name": "5 - PATCH cambiar personas",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"personas\": 3\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/reservas/{{reservaId}}"
+      }
+    },
+    {
+      "name": "6 - DELETE reserva de prueba",
+      "request": {
+        "method": "DELETE",
+        "url": "{{baseUrl}}/api/reservas/{{reservaId}}"
+      }
+    },
+    {
+      "name": "7 - Verificar que ya no existe (404)",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/reservas/{{reservaId}}"
+      }
+    }
+  ]
+}

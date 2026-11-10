@@ -1,0 +1,32 @@
+{
+  "name": "tp-09-salas-crud-mongodb",
+  "version": "1.0.0",
+  "description": "TP 09 - Actualización y eliminación de reservas de salas con Express y MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --env-file=.env src/index.js",
+    "start:local": "node --env-file=.env src/index.js",
+    "format": "prettier --write src scripts tests",
+    "format:check": "prettier --check src scripts tests",
+    "lint": "eslint src scripts tests",
+    "check": "npm run format:check && npm run lint && npm test",
+    "test": "node --test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "express-ejs-layouts": "^2.5.1",
+    "mongodb": "^7.8.0",
+    "mongoose": "^8.19.1",
+    "morgan": "^1.12.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "eslint": "^9.39.1",
+    "prettier": "^3.6.2"
+  }
+}
